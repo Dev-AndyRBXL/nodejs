@@ -1,11 +1,15 @@
 const { Router } = require('express');
-const { getUsers } = require('../db');
+const asyncHandler = require('express-async-handler');
+const { getUsers, getUser, userExists } = require('../db');
+const { NotFoundError } = require('../error');
 
 const usersRouter = Router();
 
-usersRouter.get('/', (req, res) => {
-  try {
+usersRouter.get(
+  '/',
+  asyncHandler(async (req, res) => {
     const usersMap = getUsers();
+
     if (!usersMap) {
       throw new Error('*Users Data* does not exist!');
     }
@@ -16,10 +20,23 @@ usersRouter.get('/', (req, res) => {
     }));
 
     res.render('pages/users', { users });
-  } catch (err) {
-    console.error(`Error: ${err}`);
-    next(err);
-  }
-});
+  })
+);
+
+usersRouter.get(
+  '/:userId',
+  asyncHandler(async (req, res) => {
+    let { userId } = req.params;
+    userId = Number(userId);
+
+    if (!userExists(userId)) {
+      throw new NotFoundError('User not found');
+    }
+
+    const user = getUser(userId);
+    res.render('pages/users', { users: [user] }); 
+  })
+);
+
 
 module.exports = usersRouter;

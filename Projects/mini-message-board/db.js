@@ -1,8 +1,20 @@
-const crypto = require('crypto');
 const normalizeUser = require('./utils/normalizeUser');
 
-const userId1 = crypto.randomUUID();
-const userId2 = crypto.randomUUID();
+// --- Simple ID generator ---
+let userIdCounter = 2; // Already using 1 and 2
+let messageIdCounter = 2;
+
+function generateUserId() {
+  return ++userIdCounter;
+}
+
+function generateMessageId() {
+  return ++messageIdCounter;
+}
+
+// --- Initial Users & Messages ---
+const userId1 = 1;
+const userId2 = 2;
 
 const users = new Map()
   .set(userId1, { name: 'Amando' })
@@ -14,17 +26,18 @@ const messages = [
     userId: userId1,
     user: users.get(userId1).name,
     added: new Date(),
-    id: crypto.randomUUID(),
+    id: 1,
   },
   {
     text: 'Hello World!',
     userId: userId2,
     user: users.get(userId2).name,
     added: new Date(),
-    id: crypto.randomUUID(),
+    id: 2,
   },
 ];
 
+// --- Get | Messages ---
 function getMessage(id) {
   const message = messages.find((msg) => msg.id === id);
   if (!message) throw new Error('Message not found');
@@ -39,8 +52,8 @@ function getMessages(reverse = true) {
   return reverse ? msgs.slice().reverse() : msgs;
 }
 
+// --- Get | Users ---
 function getUserMessages(userId) {
-  if (!users.has(userId)) throw new Error('User not found');
   return messages.filter((msg) => msg.userId === userId);
 }
 
@@ -48,19 +61,26 @@ function getUsers() {
   return new Map(users);
 }
 
+function getUser(userId) {
+  // console.log(userId);
+  return users.get(userId);
+}
+
+// --- Post | Users ---
 function addUser(user) {
   if (!user) throw new Error('Invalid name');
   const normalized = normalizeUser(user);
 
-  for (const { name } of users.values()) {
-    if (name === normalized) throw new Error('User already exists');
+  if ([...users.values()].some((u) => u.name === normalized)) {
+    throw new Error('User already exists');
   }
 
-  const id = crypto.randomUUID();
+  const id = generateUserId();
   users.set(id, { name: normalized });
   return id;
 }
 
+// --- Post | Messages ---
 function addMessage(text, userId) {
   if (!text || !userId) throw new Error('Invalid message or userId');
   if (!users.has(userId)) throw new Error('User does not exist');
@@ -70,14 +90,14 @@ function addMessage(text, userId) {
     userId,
     user: users.get(userId).name,
     added: new Date(),
-    id: crypto.randomUUID(),
+    id: generateMessageId(),
   };
   messages.push(newMessage);
   return newMessage;
 }
 
-function userExists(id) {
-  return users.has(id);
+function userExists(userId) {
+  return users.has(userId);
 }
 
 const links = [{ href: 'messages', text: 'Messages' }];
@@ -91,4 +111,5 @@ module.exports = {
   addMessage,
   userExists,
   getUsers,
+  getUser,
 };
