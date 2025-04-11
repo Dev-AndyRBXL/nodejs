@@ -1,0 +1,11 @@
+{
+  "type": "commonjs",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --run app.js --watch",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
