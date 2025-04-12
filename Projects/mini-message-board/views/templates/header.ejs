@@ -1,0 +1,15 @@
+<header>
+  <link rel="stylesheet" href="../styles/header.css" />
+  <div class="header-wrapper">
+    <div class="logo"><span class="logo-name">Messages Dashboard</span></div>
+    <nav class="nav" role="navigation">
+      <ul class="nav-list">
+        <% for (const link of links) { %>
+        <li class="nav-list-itm">
+          <a href="<%= link.href %>" target="_blank"><%= link.text %></a></li
+        >
+        <% } %>
+      </ul>
+    </nav>
+  </div>
+</header>

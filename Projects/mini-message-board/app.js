@@ -7,6 +7,9 @@ const usersRouter = require('./routes/usersRouter');
 const { NotFoundError, BadRequestError } = require('./error');
 
 app.use(express.static(path.join(__dirname, 'views')));
+app.set('view engine', 'ejs');
+
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/', indexRouter);
 app.use('/messages', messagesRouter);
@@ -22,9 +25,6 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: 'Internal Server Error!' });
   }
 });
-
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

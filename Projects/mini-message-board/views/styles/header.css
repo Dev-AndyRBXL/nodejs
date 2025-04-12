@@ -1,0 +1,34 @@
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem; /* optional für etwas Abstand */
+  background-color: #fff; /* optional: Hintergrundfarbe */
+}
+
+.nav {
+  display: flex;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem; /* etwas mehr Abstand */
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list-itm a {
+  text-decoration: none;
+  color: inherit; /* erbt die Textfarbe */
+  padding: 0.5rem 0.75rem;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.nav-list-itm a:hover {
+  color: #007bff; /* Beispiel für Hover-Farbe */
+  background-color: rgba(0, 123, 255, 0.1);
+  border-radius: 0.25rem;
+}
