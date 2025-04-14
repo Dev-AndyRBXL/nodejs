@@ -4,13 +4,12 @@
   <head>
     <title><%= title %></title>
   </head>
-  <script src="./scripts/validation.js" defer></script>
   <body>
     <h1><%= title %></h1>
 
     <%- include("partials/errors.ejs") %>
     <form action="/<%= user.id %>/update" method="POST">
-      <label for="firstName">First Name: </label>
+      <label for="firstName">First Name*: </label>
       <input
         type="text"
         name="firstName"
@@ -20,7 +19,7 @@
         placeholder="John"
         required
       />
-      <label for="lastName">Last Name: </label>
+      <label for="lastName">Last Name*: </label>
       <input
         type="text"
         name="lastName"
@@ -46,6 +45,7 @@
         value="<%= user.age ?? null %>"
         min="18"
         max="120"
+        placeholder="template@example.com"
       />
       <label for="bio">Bio: </label>
       <input

@@ -11,8 +11,13 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
+    "express-async-handler": "^1.2.0",
     "express-validator": "^7.2.1"
+  },
+  "dependencies": {
+    "pg": "^8.14.1"
   }
 }

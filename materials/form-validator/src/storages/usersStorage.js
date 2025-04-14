@@ -1,73 +1,109 @@
-// storages/usersStorage.js
-// This class lets us simulate interacting with a database.
-const { NotFoundError } = require('../customErrors');
+const { Pool } = require('pg');
+require('dotenv').config();
+
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
 class UsersStorage {
-  constructor() {
-    this.storage = {};
-    this.id = 0;
+  // Add a new user to the database
+  async addUser({ firstName, lastName, email, age, bio }) {
+    try {
+      const q = `INSERT INTO users ("firstName", "lastName", "email", "age", "bio")
+                 VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+      const res = await pool.query(q, [
+        firstName,
+        lastName,
+        email,
+        !age ? null : parseInt(age),
+        bio,
+      ]);
+      return res.rows[0];
+    } catch (error) {
+      console.error('Error adding user:', error);
+      throw error; 
+    }
   }
 
-  addUser({ firstName, lastName, email, age, bio }) {
-    const id = this.id;
-    this.storage[id] = { id, firstName, lastName, email, age, bio };
-    this.id++;
+  // Retrieve all users
+  async getUsers() {
+    try {
+      const res = await pool.query('SELECT * FROM users');
+      return res.rows;
+    } catch (error) {
+      console.error('Error retrieving users:', error);
+      throw error;
+    }
   }
 
-  getUserById(id) {
-    return new Promise((resolve, reject) => {
-      try {
-        const user = Object.values(this.storage)[id];
+  async getUsersByKeyword(keyword) {
+    try {
+      const cleanedKeyword = keyword.toLowerCase().trim().replace(/\s+/g, ' ');
+      const q = `%${cleanedKeyword}%`;
 
-        if (!user) {
-          return reject(new NotFoundError('User not found!'));
-        }
+      const res = await pool.query(
+        `SELECT * FROM users 
+         WHERE LOWER("firstName") LIKE $1 
+            OR LOWER("lastName") LIKE $1 
+            OR LOWER("firstName" || ' ' || "lastName") LIKE LOWER(REGEXP_REPLACE($1, '\\s+', ' ', 'g'))
+            OR LOWER("email") LIKE $1`,
+        [q]
+      );
 
-        resolve(user);
-      } catch (err) {
-        reject(err);
-      }
-    });
+      return res.rows;
+    } catch (error) {
+      console.error('Error retrieving users by keyword:', error);
+      throw error;
+    }
   }
 
-  getUsersByKeyword(keyword) {
-    return new Promise((resolve, reject) => {
-      try {
-        const newKeyword = keyword?.trim().toLowerCase();
-
-        const res = Object.values(this.storage).filter(
-          (user) =>
-            user.firstName.toLowerCase().includes(newKeyword) ||
-            user.lastName.toLowerCase().includes(newKeyword) ||
-            user.email.includes(newKeyword)
-        );
-
-        resolve(res);
-      } catch (err) {
-        reject(err);
-      }
-    });
+  // Retrieve a user by ID
+  async getUserById(id) {
+    try {
+      const res = await pool.query(`SELECT * FROM users WHERE id = $1`, [id]);
+      return res.rows[0];
+    } catch (error) {
+      console.error('Error retrieving user by ID:', error);
+      throw error;
+    }
   }
 
-  getUsers() {
-    return new Promise((resolve, reject) => {
-      try {
-        const res = Object.values(this.storage);
-        resolve(res);
-      } catch (err) {
-        reject(err);
-      }
-    });
+  // Update a user's data by ID
+  async updateUserById(id, data) {
+    try {
+      const query = `
+        UPDATE users
+        SET "firstName" = $1,
+            "lastName" = $2,
+            "email" = $3,
+            "age" = $4,
+            "bio" = $5
+        WHERE id = $6
+        RETURNING *`;
+      const values = [
+        data.firstName,
+        data.lastName,
+        data.email,
+        data.age,
+        data.bio,
+        id,
+      ];
+      await pool.query(query, values);
+    } catch (error) {
+      console.error('Error updating user by ID:', error);
+      throw error;
+    }
   }
 
-  updateUserById(id, { firstName, lastName, email, age, bio }) {
-    this.storage[id] = { id, firstName, lastName, email, age, bio };
-  }
-
-  deleteUser(id) {
-    delete this.storage[id];
+  // Delete a user by ID
+  async deleteUser(id) {
+    try {
+      const query = `DELETE FROM users WHERE id = $1 RETURNING *`;
+      const res = await pool.query(query, [id]);
+      return res.rows[0];
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      throw error;
+    }
   }
 }
-// Rather than exporting the class, we can export an instance of the class by instantiating it.
-// This ensures only one instance of this class can exist, also known as the "singleton" pattern.
+
 module.exports = new UsersStorage();
