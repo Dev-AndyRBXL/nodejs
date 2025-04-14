@@ -1,6 +1,6 @@
 const express = require('express');
-const path = require('node:path');
 const app = express();
+const path = require('node:path');
 const usersRouter = require('./src/routes/usersRouter');
 
 app.use(express.static(path.join(__dirname, 'src', 'views')));
