@@ -5,7 +5,6 @@ const { body, validationResult } = require('express-validator');
 // Error messages
 const alphaErr = 'must only contain letters.';
 const lengthErr = 'must be between 1 and 10 characters.';
-const emailErr = 'must be a valid email!';
 const ageErr = 'must be between 18 and 120!';
 const bioErr = 'must be between 3 and 200 characters long!';
 
@@ -25,19 +24,7 @@ const validateUser = [
     .withMessage(`Last name ${lengthErr}`),
   body('email')
     .optional({ values: 'falsy' })
-    .trim()
-    .isEmail()
-    .withMessage(`Email ${emailErr}`)
-    .custom(async (val) => {
-      try {
-        const users = await usersStorage.getUsers(val);
-        if (users.length > 0) {
-          return Promise.reject('E-mail already in use');
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    }),
+    .trim(),
   body('age')
     .optional({ values: 'falsy' })
     .isInt({ min: 18, max: 120 })
@@ -93,7 +80,7 @@ exports.usersCreatePost = [
 
 // Show update user form
 exports.usersUpdateGet = async (req, res) => {
-  const user = await usersStorage.getUserById(req.params.id);
+  const user = await usersStorage.getUserById(Number(req.params.id));
   res.render('updateUser', {
     title: 'Update user',
     user: user,
