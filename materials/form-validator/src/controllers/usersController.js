@@ -3,8 +3,9 @@ const usersStorage = require('../storages/usersStorage');
 const { body, validationResult } = require('express-validator');
 
 // Error messages
-const alphaErr = 'must only contain letters.';
-const lengthErr = 'must be between 1 and 10 characters.';
+const alphaErr = 'must only contain letters!';
+const lengthErr = 'must be between 1 and 10 characters!';
+const emailErr = 'must be a valid email!';
 const ageErr = 'must be between 18 and 120!';
 const bioErr = 'must be between 3 and 200 characters long!';
 
@@ -24,7 +25,9 @@ const validateUser = [
     .withMessage(`Last name ${lengthErr}`),
   body('email')
     .optional({ values: 'falsy' })
-    .trim(),
+    .trim()
+    .isEmail()
+    .withMessage(`Email ${emailErr}`),
   body('age')
     .optional({ values: 'falsy' })
     .isInt({ min: 18, max: 120 })
