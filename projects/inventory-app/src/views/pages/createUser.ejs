@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <%- include('partials/errors') %>
+    <form action="/users/create" method="POST">
+      <label>Name:</label>
+      <input type="text" name="name" required /><br />
+
+      <label>Email:</label>
+      <input type="email" name="email" required /><br />
+
+      <label>Password:</label>
+      <input type="password" name="password_hash" required /><br />
+
+      <label>Phone:</label>
+      <input type="tel" name="phone" required /><br />
+
+      <label>Profile Picture URL:</label>
+      <input type="url" name="profile_picture_url" required /><br />
+
+      <label>Address:</label>
+      <input type="text" name="address" required /><br />
+
+      <label>City:</label>
+      <input type="text" name="city" required /><br />
+
+      <label>Rating:</label>
+      <input type="number" name="rating" step="5" min="0" max="100" required /><br />
+
+      <button type="submit">Create User</button>
+    </form>
+  </body>
+</html>

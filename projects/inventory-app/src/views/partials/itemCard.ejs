@@ -1,0 +1,20 @@
+<li>
+  <div id="<%= item.id %>">
+    <h4><%= item.title %></h4>
+    <p style="opacity: 75%"><%= item.description %></p>
+    <p><span><%= item.category %></span></p>
+    <p><span>$<%= item.price %></span></p>
+    <p style="color: lime"
+      ><%= item.is_available ? 'Available' : 'Out of stock' %></p
+    >
+    <div class="display-img-container">
+      <img class="display-img" src="<%= item.image_urls[0] %>" alt="" />
+    </div>
+    <div class="prev-imgs-container">
+      <% for (imageUrl of item.image_urls) { %>
+      <img class="prev-img" src="<%= imageUrl %>" alt="" />
+      <% } %>
+      <button class="add-img-btn" title="Add Image"><i class="fa-solid fa-plus"></i></button>
+    </div>
+  </div>
+</li>

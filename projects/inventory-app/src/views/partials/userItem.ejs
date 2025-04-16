@@ -1,0 +1,19 @@
+<li>
+  <div id="<%= user.id %>" class="user-itm">
+    <h3 class="user-name"><%= user.name %></h3>
+    <div class="user-info">
+      <p><span><%= user.email %></span></p>
+      <p><span>Join Date: <%= user.joined_at %></span></p>
+      <p><span>Rating: <%= user.rating %>/100</span></p>
+    </div>
+    <hr style="margin: 0.5rem 0;"/>
+    <ul class="user-itms-list">
+      <% const user_items = items.filter((itm) => user.id === itm.user_id) %>
+      <% for (item of user_items) { %>
+        <%- include('itemCard', { item }) %>
+      <% } %>
+    </ul>
+    <hr />
+    <button class="add-item-btn"><a href="/items/create">Add Item</a></button>
+  </div>
+</li>

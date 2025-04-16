@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <form action="/items/create" method="POST">
+      <div>
+        <label for="id">ID</label>
+        <input
+          type="text"
+          id="id"
+          name="id"
+          value="86047ef9-caaa-45bd-b04f-8d471c2ab407"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="user_id">User ID</label>
+        <input
+          type="text"
+          id="user_id"
+          name="user_id"
+          value="8c0b3ae4-44dd-41c9-9e2b-b47cba4f4d4a"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="title">Title</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value="Vintage Wooden Chair"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="description">Description</label>
+        <textarea id="description" name="description" required>
+A beautifully crafted antique wooden chair. Very comfortable.</textarea
+        >
+      </div>
+
+      <div>
+        <label for="category">Category</label>
+        <input
+          type="text"
+          id="category"
+          name="category"
+          value="Furniture"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="price">Price</label>
+        <input type="number" id="price" name="price" value="120.00" required />
+      </div>
+
+      <div>
+        <label for="is_available">Available</label>
+        <input
+          type="checkbox"
+          id="is_available"
+          name="is_available"
+          checked
+          required
+        />
+      </div>
+
+      <div>
+        <label for="image_urls">Image URLs</label>
+        <textarea id="image_urls" name="image_urls" required>
+        https://m.media-amazon.com/images/I/41K-IVBOq7L._AC_US100_.jpg,
+        https://m.media-amazon.com/images/I/418BRNUa1kL._AC_.jpg,
+        https://m.media-amazon.com/images/I/818aFXEn+TL._AC_SL1500_.jpg
+      </textarea
+        >
+      </div>
+
+      <div>
+        <label for="listed_at">Listed At</label>
+        <input
+          type="datetime-local"
+          id="listed_at"
+          name="listed_at"
+          value="2025-04-15T18:30:47"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="location">Location</label>
+        <input
+          type="text"
+          id="location"
+          name="location"
+          value="Mexico City"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="is_service">Is this a service?</label>
+        <input type="checkbox" id="is_service" name="is_service" />
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
