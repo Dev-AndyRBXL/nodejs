@@ -4,52 +4,51 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign-Up</title>
+    <link rel="stylesheet" href="styles/sign-up.css">
   </head>
   <body>
     <header><h1>Sign-Up</h1></header>
     <main role="main">
-      <form
-        action="/"
-        method="POST"
-        class="flex justify-center items-center flex-col"
-      >
-        <div class="form-div">
-          <label for="username"></label>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            minlength="3"
-            maxlength="20"
-            required
-            placeholder="username"
-          />
-        </div>
-        <div class="form-div">
-          <label for="displayname"></label>
-          <input
-            type="text"
-            name="displayname"
-            id="displayname"
-            minlength="3"
-            maxlength="20"
-            required
-            placeholder="displayname"
-          />
-        </div>
-        <div class="form-div">
-          <label for="password"></label>
-          <input
-            type="text"
-            name="password"
-            id="password"
-            minlength="8"
-            required
-            placeholder="password"
-          />
-        </div>
-        <button type="submit">Sign-Up</button>
-      </form>
+      <div class="container">
+        <form action="/" method="POST" class="sign-up-form">
+          <div class="form-div">
+            <label for="username"></label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              minlength="3"
+              maxlength="20"
+              required
+              placeholder="username"
+            />
+          </div>
+          <div class="form-div">
+            <label for="displayname"></label>
+            <input
+              type="text"
+              name="displayname"
+              id="displayname"
+              minlength="3"
+              maxlength="20"
+              required
+              placeholder="displayname"
+            />
+          </div>
+          <div class="form-div">
+            <label for="password"></label>
+            <input
+              type="text"
+              name="password"
+              id="password"
+              minlength="8"
+              required
+              placeholder="password"
+            />
+          </div>
+          <button type="submit">Sign-Up</button>
+        </form>
+      </div>
     </main>
   </body>
 </html>

@@ -1,0 +1,32 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --body-bg: #f1f1f1;
+  --body-bg-dark: #1d1d1d;
+  --text-color: #000;
+  --text-color-dark: #f1f1f1; 
+}
+
+body {
+  background-color: var(--body-bg);
+  color: var(--text-color);
+  height: 100vh;
+  width: 100vw;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark {
+  background-color: var(--body-bg-dark);
+  color: var(--text-color-dark);
+}
+
+body.dark img,
+body.dark video,
+body.dark iframe,
+body.dark svg {
+  filter: invert(1) hue-rotate(180deg);
+}

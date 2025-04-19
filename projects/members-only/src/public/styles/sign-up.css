@@ -1,0 +1,15 @@
+@import url('./index.css');
+
+body {
+  background-color: rgb(29, 29, 29);
+}
+
+.container {
+  background-color: rgba(44, 44, 44, 0.733);
+}
+
+.sign-up-form {
+}
+
+.form-div {
+}

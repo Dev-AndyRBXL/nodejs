@@ -4,17 +4,13 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "postcss src/public/css/input.css -o src/public/dist/css/input.css",
-    "watch:css": "postcss src/public/css/input.css -o src/public/dist/css/input.css --watch"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.4",
-    "autoprefixer": "^10.4.21",
     "bcryptjs": "^3.0.2",
     "connect-pg-simple": "^10.0.0",
     "dotenv": "^16.5.0",
